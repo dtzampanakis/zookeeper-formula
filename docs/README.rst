@@ -3,7 +3,7 @@
 zookeeper-formula
 ================
 
-Installs and Configures Apache Zookeeper from from a tar file.
+Installs and Configures Apache Zookeeper from a tar file.
 
 |img_travis| |img_sr| |img_pc|
 
@@ -26,47 +26,33 @@ start on a new formula and it serves as a style guide.
 .. contents:: **Table of Contents**
    :depth: 1
 
-General notes
+Apply notes
 -------------
+Based on zookeeper formula from github.
+This state setup standalone or clustered zookeeper.
+For clustered zookeeper we must create a zookeeper_cluster variable in
+pillar/servers/nameofenv.sls like that:
 
-See the full `SaltStack Formulas installation and usage instructions
-<https://docs.saltstack.com/en/latest/topics/development/conventions/formulas.html>`_.
+zookeeper_cluster:
+{{macros.select_cluster_list(id,'zookeeper')}} *
 
-If you are interested in writing or contributing to formulas, please pay attention to the `Writing Formula Section
-<https://docs.saltstack.com/en/latest/topics/development/conventions/formulas.html#writing-formulas>`_.
+This will return a list with all the members of the cluster. Later this list will be change to a dict(needed by formula) in the pillar/zookeeper/init.sls file.If the zookeeper_cluster is missing then it will proceed to standalone setup.
 
-If you want to use this formula, please pay attention to the ``FORMULA`` file and/or ``git tag``,
-which contains the currently released version. This formula is versioned according to `Semantic Versioning <http://semver.org/>`_.
+In the pillar file we can
+- Pass some variables that will replace the defaults from zookeeper/defaults.yaml.
 
-See `Formula Versioning Section <https://docs.saltstack.com/en/latest/topics/development/conventions/formulas.html#versioning>`_ for more details.
+- Specify java version in the pillar file. If not it defaults to java-11 from zookeeper/osfamilymap.yaml.
 
-If you need (non-default) configuration, please pay attention to the ``pillar.example`` file and/or `Special notes`_ section.
+- Specify the user that zookeeper service run at pillar file in systemdconfig.user and systemdconfig.group
 
-Contributing to this repo
--------------------------
+- Specify downloadurl and version of zookeeper to be installed. If not it default to 3.6.2 version.
 
-Commit messages
-^^^^^^^^^^^^^^^
 
-**Commit message formatting is significant!!**
+With state.apply zookeeper.clean it removes the serivce file the pkg and the conf folder.
 
-Please see `How to contribute <https://github.com/saltstack-formulas/.github/blob/master/CONTRIBUTING.rst>`_ for more details.
+* for that macro to return list we must specify in the roster file grain.roles zookeeper or zookeeper-cluster.
 
-pre-commit
-^^^^^^^^^^
-
-`pre-commit <https://pre-commit.com/>`_ is configured for this formula, which you may optionally use to ease the steps involved in submitting your changes.
-First install  the ``pre-commit`` package manager using the appropriate `method <https://pre-commit.com/#installation>`_, then run ``bin/install-hooks`` and
-now ``pre-commit`` will run automatically on each ``git commit``. ::
-
-  $ bin/install-hooks
-  pre-commit installed at .git/hooks/pre-commit
-  pre-commit installed at .git/hooks/commit-msg
-
-Special notes
--------------
-
-None
+NOTE there is an example pillar file that i worked in the testing. 
 
 Available states
 ----------------
@@ -171,3 +157,4 @@ Runs all of the stages above in one go: i.e. ``destroy`` + ``converge`` + ``veri
 ^^^^^^^^^^^^^^^^^^^^^
 
 Gives you SSH access to the instance for manual testing.
+

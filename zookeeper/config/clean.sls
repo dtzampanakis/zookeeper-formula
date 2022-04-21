@@ -11,6 +11,6 @@ include:
 
 zookeeper-config-clean-file-absent:
   file.absent:
-    - name: {{ zookeeper.config }}
+    - name: {{ zookeeper.pkg.installdir }}/zookeeper-{{ zookeeper.pkg.version }}/conf/zoo.cfg
     - require:
       - sls: {{ sls_service_clean }}

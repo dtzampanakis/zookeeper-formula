@@ -9,6 +9,14 @@ zookeeper-dependency-install-pkg-installed:
   pkg.installed:
     - name: tar
 
+{% if zookeeper.systemdconfig.user != 'root' %}
+zookeeper-user:
+  user.present:
+    - name: zookeeper
+    - shell: /bin/false
+    - createhome: false 
+{% endif %}
+
 zookeeper-archive-install-pkg-installed:
   archive.extracted:
     - name: {{ zookeeper.pkg.installdir }}/zookeeper-{{ zookeeper.pkg.version }}

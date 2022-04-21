@@ -5,8 +5,8 @@ zookeeper:
   pkg:
     name: zookeeper
     downloadurl: >
-      https://mirror.csclub.uwaterloo.ca/apache/zookeeper/zookeeper-3.6.2/apache-zookeeper-3.6.2-bin.tar.gz
-    version: 3.6.2
+      https://dlcdn.apache.org/zookeeper/zookeeper-3.8.0/apache-zookeeper-3.8.0-bin.tar.gz 
+    version: 3.8.0
     installdir: /opt
 
     # OpenJDK package name on system; defaults to an empty string, which avoids
@@ -31,4 +31,4 @@ zookeeper:
     initLimit: 5
     syncLimit: 2
 
-    customservers: ''
+    customservers: {}

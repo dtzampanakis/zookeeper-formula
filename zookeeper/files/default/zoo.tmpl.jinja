@@ -6,6 +6,9 @@ tickTime={{ zookeeper.zookeeperproperties.tickTime }}
 dataDir={{ zookeeper.zookeeperproperties.dataDir }}
 initLimit={{ zookeeper.zookeeperproperties.initLimit }}
 syncLimit={{ zookeeper.zookeeperproperties.syncLimit }}
+maxClientCnxns={{ zookeeper.zookeeperproperties.maxClientCnxns }}
+autopurge.snapRetainCount={{ zookeeper.zookeeperproperties.snapRetainCount }}
+autopurge.purgeInterval={{ zookeeper.zookeeperproperties.purgeInterval }}
 {%- if ['zookeeper.zookeeperproperties.clientPort'] %}
 clientPort={{ zookeeper.zookeeperproperties.clientPort }}
 {%- endif %}

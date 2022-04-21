@@ -4,7 +4,7 @@
 # For help on this file's format, see https://kitchen.ci/
 driver:
   name: docker
-  use_sudo: false
+  use_sudo: true
   privileged: true
   run_command: /lib/systemd/systemd
 
@@ -231,7 +231,7 @@ suites:
               - zookeeper
               - define_roles
       pillars_from_files:
-        zookeeper.sls: pillar.example
+        zookeeper.sls: test/salt/pillar/zookeeper.sls
         define_roles.sls: test/salt/pillar/define_roles.sls
     verifier:
       inspec_tests:
@@ -271,7 +271,7 @@ suites:
         base:
           '*':
             - zookeeper._mapdata
-            - zookeeper
+            - zookeeper.archive
       pillars:
         top.sls:
           base:
